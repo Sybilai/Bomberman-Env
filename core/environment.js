@@ -1,5 +1,10 @@
+GameRules = require('./game_rules.js');
+
+var Ticker = require('./ticker.js');
+
 var Environment = {
   init: function() {
+    Ticker.update();
   },
 
   validating: function(obj) { // JSON object

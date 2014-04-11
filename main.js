@@ -1,7 +1,7 @@
-Environment = require('./environment.js');
+Environment = require('./core/environment.js');
 
-var spawn = require('child_process').spawn,
-    fs    = require('fs')
+var spawn = require('child_process').spawn
+  , fs    = require('fs')
     ;
 
 var GATEWAY_stderr = fs.openSync('./log/gateway_errors.log', 'a'),
@@ -21,8 +21,6 @@ Environment.sendMessage = function(obj) {
   GATEWAY.send(obj);
 }
 
-Environment.test();
-
 /*
 var VISUALIZER_stderr = fs.openSync('./log/visualizer_errors.log', 'a'),
     VISUALIZER_stdout = fs.openSync('./log/visualizer_logs.log', 'a'),
@@ -37,3 +35,6 @@ VISUALIZER.on('message', function(message) {
   console.log('message:', message);
 });
 */
+
+
+Environment.init();
