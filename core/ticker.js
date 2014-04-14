@@ -8,7 +8,7 @@ var Ticker = {
       Ticker.queue.shift()();
     }
 
-    // Engine.update();
+    Engine.update();
     // if (Draw) Draw.update();
 
     setTimeout(Ticker.update, 1000/GameRules.framesPerSecond);

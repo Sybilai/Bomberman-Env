@@ -1,9 +1,12 @@
 GameRules = require('./game_rules.js');
-
+Engine = require('./engine.js');
 var Ticker = require('./ticker.js');
 
 var Environment = {
   init: function() {
+    var N = 2, M = 2;
+
+    Engine.initMatrices(N, M);
     Ticker.update();
   },
 
