@@ -1,9 +1,0 @@
-
-/home/pr/Work/Bomberman-Env/models/client_model.js:16
-    this.isDead();
-         ^
-TypeError: Object #<Socket> has no method 'isDead'
-    at Socket.<anonymous> (/home/pr/Work/Bomberman-Env/models/client_model.js:16:10)
-    at Socket.EventEmitter.emit (events.js:117:20)
-    at _stream_readable.js:910:16
-    at process._tickCallback (node.js:415:13)
