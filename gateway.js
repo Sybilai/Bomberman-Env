@@ -1,7 +1,19 @@
 process.name = "GATEWAY";
 
 process.on('message', function(message) {
-  console.log( message );
+  for (var i = 0; i < CLIENTS.length; ++i) {
+    if (message.exclude) {
+      if ( message.exclude.indexOf(CLIENTS[i].client.id) > -1 )
+        continue;
+    }
+
+    if (message.only) {
+      if ( message.only.indexOf(CLIENTS[i].client.id) < 0 )
+        continue;
+    }
+
+    CLIENTS[i].sendMessage( message.event );
+  }
 });
 
 var Client = require('./models/client_model.js');
@@ -42,11 +54,16 @@ var server = net.createServer( function (client) {
 
 }).listen(server_port);
 
-function checkKey(data) {
+var checkKey = function (data) {
   try {
     data = JSON.parse(data);
   } catch (e) {
     return false;
   }
   return data;
+}
+
+sendMessage = function (obj) {
+  console.log( JSON.stringify(obj) + '\n' );
+  process.send(obj);
 }
