@@ -58,7 +58,7 @@ var Engine = {
 
     for (var i = 0; i < Engine.bombs.length; ++i) {
       var bomb = Engine.bombs[i];
-      if (GameRules.currentFrame - bomb.spawnFrame  >= GameRules.bombLife) {
+      if (GameRules.currentFrame - bomb.spawnFrame  >= GameRules.bombs.life) {
         bomb.burn();
         --i;
         continue;
@@ -80,7 +80,7 @@ var Engine = {
         }
       }
 
-      if (GameRules.currentFrame - flame.spawnFrame >= GameRules.flameLife) {
+      if (GameRules.currentFrame - flame.spawnFrame >= GameRules.flames.life) {
         spliceContent(flame);
         Engine.flames.splice(i, 1);
         --i;
@@ -102,7 +102,7 @@ function move( key ) {
 
     if (aux.direction !== "none") {
       var now = GameRules.currentFrame;
-      if (now - aux.lastUpdate > GameRules.speed[key]) {
+      if (now - aux.lastUpdate > GameRules[key].speed) {
         moveThis( aux );
         aux.lastUpdate = now;
       }

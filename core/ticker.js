@@ -1,7 +1,6 @@
 var Ticker = {
   queue: [],
   update: function() {
-    console.log(GameRules.framesPerSecond);
     ++GameRules.currentFrame;
 
     while (Ticker.queue.length) {

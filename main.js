@@ -6,10 +6,10 @@ var spawn = require('child_process').spawn
 
 var GATEWAY_stderr = fs.openSync('./log/gateway_errors.log', 'a'),
     GATEWAY_stdout = fs.openSync('./log/gateway_logs.log', 'a'),
-    GATEWAY        = spawn('nodejs', 
+    GATEWAY        = spawn('nodejs',
                            ['./gateway.js'],
                            { detached: true,
-                             stdio: ['ipc', GATEWAY_stdout, GATEWAY_stderr] 
+                             stdio: ['ipc', GATEWAY_stdout, GATEWAY_stderr]
                            }
                           );
 
@@ -24,10 +24,10 @@ Environment.sendMessage = function(obj) {
 /*
 var VISUALIZER_stderr = fs.openSync('./log/visualizer_errors.log', 'a'),
     VISUALIZER_stdout = fs.openSync('./log/visualizer_logs.log', 'a'),
-    VISUALIZER        = spawn('nodejs', 
+    VISUALIZER        = spawn('nodejs',
                               ['./visualizer.js'],
                               { detached: true,
-                                stdio: ['ipc', GATEWAY_stdout, GATEWAY_stderr] 
+                                stdio: ['ipc', GATEWAY_stdout, GATEWAY_stderr]
                               }
                              );
 

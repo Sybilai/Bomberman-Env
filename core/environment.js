@@ -4,15 +4,14 @@ var Ticker = require('./ticker.js');
 
 var Environment = {
   init: function() {
-    var N = 2, M = 2;
-
-    Engine.initMatrices(N, M);
+    Engine.initMatrices(GameRules.sizeN, GameRules.sizeM);
     Ticker.update();
   },
 
   validating: function(obj) { // JSON object
     // validating the json
     // if is ok, we will process it
+    console.log( obj );
     Environment.process(obj);
   },
 
