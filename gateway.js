@@ -67,3 +67,7 @@ sendMessage = function (obj) {
   console.log( JSON.stringify(obj) + '\n' );
   process.send(obj);
 }
+
+process.on("exit", function() {
+  process.exit(1);
+});

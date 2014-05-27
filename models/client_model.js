@@ -15,18 +15,18 @@ var Client = function(key, client) {
 
   client.on("end", function () {
     console.log("Client disconnected:", client.id);
-    CLIENTS.splice( CLIENTS.indexOf(this), 1);
-    this.isDead();
+    CLIENTS.splice( CLIENTS.indexOf(client), 1);
+    client.kill();
   });
 
   client.on("error", function (exc) {
     console.log("Ignorin exception:", exc);
   });
 
-  this.isAlive();
+  this.spawn();
 };
 
-Client.prototype.isAlive =
+Client.prototype.spawn =
 function() {
   sendMessage({
     event: "new_player",
@@ -37,7 +37,7 @@ function() {
   });
 };
 
-Client.prototype.isDead =
+Client.prototype.kill =
 function() {
   if (!this.is_dead) return;
   this.is_dead = true;

@@ -36,5 +36,13 @@ VISUALIZER.on('message', function(message) {
 });
 */
 
-
 Environment.init();
+
+
+process.once('SIGINT', imDying);
+process.once('exit', imDying);
+
+function imDying() {
+  GATEWAY.kill("SIGTERM");
+  process.exit(0);
+}
