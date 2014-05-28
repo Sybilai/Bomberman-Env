@@ -29,6 +29,7 @@ var VISUALIZER_stderr = fs.openSync('./log/visualizer_errors.log', 'a'),
 VISUALIZER.on('message', function(message) {
   VISUALIZER.send({
     only: message,
+    event: 'game',
     game_rules: GameRules,
     game_state: Engine.matrices
   });
