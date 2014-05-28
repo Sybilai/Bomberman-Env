@@ -17,9 +17,31 @@ GATEWAY.on('message', function(message) {
   Environment.validating(message);
 });
 
+var VISUALIZER_stderr = fs.openSync('./log/visualizer_errors.log', 'a'),
+    VISUALIZER_stdout = fs.openSync('./log/visualizer_logs.log', 'a'),
+    VISUALIZER        = spawn('nodejs',
+                           ['./visualizer.js'],
+                           { detached: true,
+                             stdio: ['ipc', VISUALIZER_stdout, VISUALIZER_stderr]
+                           }
+                          );
+
+VISUALIZER.on('message', function(message) {
+  VISUALIZER.send({
+    only: message,
+    game_rules: GameRules,
+    game_state: Engine.matrices
+  });
+});
+
+
 Environment.sendMessage = function(obj) {
   console.log("P:", JSON.stringify(obj));
   GATEWAY.send(obj);
+
+  if (!obj.only) {
+    VISUALIZER.send(obj.data);
+  }
 }
 
 Environment.init();

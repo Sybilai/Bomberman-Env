@@ -25,6 +25,11 @@ var Environment = {
           }
         })(obj) );
         break;
+
+      case 'game_rules':
+        Message.sendGameRules(obj.from_id);
+        break;
+
       case 'new_player':
         Ticker.queue.push( (function(obj) {
           return function() {

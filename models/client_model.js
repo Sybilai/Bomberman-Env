@@ -39,7 +39,7 @@ function() {
 
 Client.prototype.kill =
 function() {
-  if (!this.is_dead) return;
+  if (this.is_dead) return;
   this.is_dead = true;
 
   sendMessage({
