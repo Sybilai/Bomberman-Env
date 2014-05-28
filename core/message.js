@@ -22,6 +22,26 @@ var Message = {
     });
   },
 
+  sendSpawn: function(_x, _y, what) {
+    this.queue.push({
+      data: {
+        event: "new_entity",
+        x: _x,
+        y: _y,
+        data: what
+      }
+    });
+  },
+
+  sendDestroy: function( object_id ) {
+    this.queue.push({
+      data: {
+        event: "destroy_entity",
+        object_id: object_id
+      }
+    });
+  },
+
   sendAll: function() {
     while (this.baseQueue.length) {
       this.baseQueue.shift()();

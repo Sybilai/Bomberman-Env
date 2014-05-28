@@ -64,6 +64,7 @@ var checkKey = function (data) {
 }
 
 sendMessage = function (obj) {
+  console.log( obj );
   process.send(obj);
 }
 /*

@@ -19,9 +19,11 @@ var Environment = {
     // we will process the obj
     switch (obj.event) {
       case 'game_state':
-        Message.baseQueue.push(function() {
-          Message.sendGameState(obj.from_id);
-        });
+        Message.baseQueue.push( (function(obj) {
+          return function() {
+            Message.sendGameState(obj.from_id);
+          }
+        })(obj) );
         break;
       case 'new_player':
         Ticker.queue.push( (function(obj) {
@@ -30,6 +32,15 @@ var Environment = {
           }
         })(obj) );
         break;
+
+      case 'destroy_player':
+        Ticker.queue.push( (function(from_id) {
+          return function() {
+            Engine.destroyPlayer(from_id);
+          }
+        })(obj.from_id) );
+        break;
+
       default:
         Message.send(obj, "This is not a valid event");
         break;

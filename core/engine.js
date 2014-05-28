@@ -2,10 +2,10 @@ Block = require('./../models/block_model.js');
 Bomb = require('./../models/bomb_model.js');
 Flame = require('./../models/flame_model.js');
 Player = require('./../models/player_model.js');
-
+FixBlock = require('./../models/fixblock_model.js');
 var Engine = {
   matrices: undefined,
-
+  objects: 0,
   dir: {
     "left": {x: -1, y: 0},
     "right": {x: 1, y: 0},
@@ -27,19 +27,14 @@ var Engine = {
       }
     }
 
-    var fixBlock = {
-      type: "fixblock",
-      isBlocking: true
-    }
-
     // border
     for (var i = 0; i < N; ++i) {
-      Engine.matrices[i][M-1].content =
-        Engine.matrices[i][0].content = [fixBlock];
+      new FixBlock(i, M-1);
+      new FixBlock(i, 0);
     }
     for (var i = 0; i < M; ++i) {
-      Engine.matrices[0][i].content =
-        Engine.matrices[N-1][i].content = [fixBlock];
+      new FixBlock(0, i);
+      new FixBlock(N-1, i);
     }
   },
 
@@ -95,9 +90,38 @@ var Engine = {
     player.name = name;
   },
 
+  destroyPlayer: function(id) {
+    var aux;
+    for (var i = 0, l = Engine.players.length; i < l; ++i) {
+      if (Engine.players[i].id == id) {
+        aux = Engine.players[i];
+        break;
+      }
+    }
+
+    Engine.destroy("players", aux);
+  },
+
   createBomb: function() {
   },
 
+
+  spawn: function(key, _x, _y, data) {
+    data.object_id = ++Engine.objects;
+    Engine.matrices[_x][_y].content.push(data);
+    if (Engine[key]) Engine[key].push(data);
+
+    Message.sendSpawn(_x, _y, data);
+  },
+
+  destroy: function(key, data) {
+    spliceContent( data );
+    Engine[key].splice(
+      Engine[key].indexOf(data)
+      , 1);
+
+    Message.sendDestroy(data.object_id);
+  }
 }
 
 function spliceContent(x) {

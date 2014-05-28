@@ -1,4 +1,5 @@
 var Client = function(key, client) {
+  var self = this;
   this.name = key.name;
   this.client = client;
   this.is_dead = false;
@@ -17,7 +18,7 @@ var Client = function(key, client) {
   client.on("end", function () {
     console.log("Client disconnected:", client.id);
     CLIENTS.splice( CLIENTS.indexOf(client), 1);
-    client.kill();
+    self.kill();
   });
 
   client.on("error", function (exc) {
@@ -42,7 +43,7 @@ function() {
   this.is_dead = true;
 
   sendMessage({
-    event: "dead_player",
+    event: "destroy_player",
     from_id: this.client.id
   });
 };

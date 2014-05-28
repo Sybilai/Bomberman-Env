@@ -6,8 +6,8 @@ function Flame(pos) {
     y: pos.y
   };
   this.spawnFrame = GameRules.currentFrame;
-  Engine.matrices[pos.x][pos.y].content.push(this);
-  Engine.flames.push(this);
+
+  Engine.spawn("flames", pos.x, pos.y, this);
 }
 
 module.exports = Flame;

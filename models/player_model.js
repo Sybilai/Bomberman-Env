@@ -16,16 +16,12 @@ function Player(_x, _y) {
   this.lastUpdate = 0;
   this.direction = "none";
 
-  Engine.matrices[_x][_y].content.push(this);
-  Engine.players.push(this);
+  Engine.spawn("players", _x, _y, this);
 }
 
 Player.prototype.burn =
 function() {
-  spliceContent(this);
-  Engine.players.splice(
-    Engine.players.indexOf(this)
-  , 1);
+  Engine.destroy("players", this);
 };
 
 module.exports = Player;

@@ -10,9 +10,8 @@ function Bomb(_x, _y) {
   this.spawnFrame = GameRules.currentFrame;
   this.lastUpdate = 0;
   this.direction = "none";
-  
-  Engine.matrices[_x][_y].content.push(this)
-  Engine.bombs.push(this);
+
+  Engine.spawn("bombs", _x, _y, this);
 }
 
 Bomb.prototype.explode =
@@ -42,10 +41,8 @@ function() {
 
 Bomb.prototype.burn =
 function() {
-  spliceContent(this);
+  Engine.destroy("bombs", this);
   this.explode();
-  Engine.bombs.splice(
-    Engine.bombs.indexOf(this)
-  , 1);
 };
+
 module.exports = Bomb;
