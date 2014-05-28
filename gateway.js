@@ -1,6 +1,10 @@
 process.name = "GATEWAY";
 
 process.on('message', function(message) {
+  sendToClients(message);
+});
+
+function sendToClients(message) {
   for (var i = 0; i < CLIENTS.length; ++i) {
     if (message.exclude) {
       if ( message.exclude.indexOf(CLIENTS[i].client.id) > -1 )
@@ -14,7 +18,7 @@ process.on('message', function(message) {
 
     CLIENTS[i].sendMessage( message.data );
   }
-});
+}
 
 var Client = require('./models/client_model.js');
 CLIENTS = [];

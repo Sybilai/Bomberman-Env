@@ -29,6 +29,12 @@ var Environment = {
         Ticker.queue.push( (function(obj) {
           return function() {
             Engine.createPlayer(obj.from_id, obj.name);
+            Message.sendGameRules(obj.from_id);
+            Message.baseQueue.push( (function(obj) {
+              return function() {
+                Message.sendGameState(obj.from_id);
+              }
+            })(obj) );
           }
         })(obj) );
         break;

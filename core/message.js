@@ -12,6 +12,16 @@ var Message = {
     });
   },
 
+  sendGameRules: function(to_id) {
+    this.queue.push({
+      only: [to_id],
+      data: {
+        event: "game_rules",
+        data: GameRules
+      }
+    });
+  },
+
   sendGameState: function(to_id) {
     this.queue.push({
       only: [to_id],
