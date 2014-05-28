@@ -10,6 +10,8 @@ var Ticker = {
     Engine.update();
     // if (Draw) Draw.update();
 
+    Message.sendAll();
+
     setTimeout(Ticker.update, 1000/GameRules.framesPerSecond);
   }
 }

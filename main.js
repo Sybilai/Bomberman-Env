@@ -18,27 +18,13 @@ GATEWAY.on('message', function(message) {
 });
 
 Environment.sendMessage = function(obj) {
+  console.log("P:", JSON.stringify(obj));
   GATEWAY.send(obj);
 }
 
-/*
-var VISUALIZER_stderr = fs.openSync('./log/visualizer_errors.log', 'a'),
-    VISUALIZER_stdout = fs.openSync('./log/visualizer_logs.log', 'a'),
-    VISUALIZER        = spawn('nodejs',
-                              ['./visualizer.js'],
-                              { detached: true,
-                                stdio: ['ipc', GATEWAY_stdout, GATEWAY_stderr]
-                              }
-                             );
-
-VISUALIZER.on('message', function(message) {
-  console.log('message:', message);
-});
-*/
-
 Environment.init();
 
-
+/*
 process.once('SIGINT', imDying);
 process.once('exit', imDying);
 
@@ -46,3 +32,4 @@ function imDying() {
   GATEWAY.kill("SIGTERM");
   process.exit(0);
 }
+*/

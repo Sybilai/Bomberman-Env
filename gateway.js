@@ -12,7 +12,7 @@ process.on('message', function(message) {
         continue;
     }
 
-    CLIENTS[i].sendMessage( message.event );
+    CLIENTS[i].sendMessage( message.data );
   }
 });
 
@@ -64,10 +64,10 @@ var checkKey = function (data) {
 }
 
 sendMessage = function (obj) {
-  console.log( JSON.stringify(obj) + '\n' );
   process.send(obj);
 }
-
-process.on("exit", function() {
+/*
+process.once("exit", function() {
+  console.log('what');
   process.exit(1);
-});
+});*/

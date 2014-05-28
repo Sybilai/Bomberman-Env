@@ -14,15 +14,14 @@ function Player(_x, _y) {
 
   this.name = "Barman";
   this.lastUpdate = 0;
-  this.direction = "down";
+  this.direction = "none";
 
-  Engine.matrices[_x][_y].content.push(this)
+  Engine.matrices[_x][_y].content.push(this);
   Engine.players.push(this);
 }
 
 Player.prototype.burn =
 function() {
-  console.log("Player", this.name, "is dead!!!");
   spliceContent(this);
   Engine.players.splice(
     Engine.players.indexOf(this)

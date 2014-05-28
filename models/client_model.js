@@ -9,6 +9,7 @@ var Client = function(key, client) {
 
   client.on("data", function (data) {
     if (data = checkMessage(data)) {
+      data.from_id = client.id;
       sendMessage(data);
     }
   });
@@ -30,10 +31,8 @@ Client.prototype.spawn =
 function() {
   sendMessage({
     event: "new_player",
-    player: {
-      name: this.name,
-      player_id: this.client.id
-    }
+    name: this.name,
+    from_id: this.client.id
   });
 };
 
@@ -44,13 +43,13 @@ function() {
 
   sendMessage({
     event: "dead_player",
-    player_id: this.client.id
+    from_id: this.client.id
   });
 };
 
 Client.prototype.sendMessage =
 function(message) {
-  Client.client.write( JSON.stringify(message) + '\n' );
+  this.client.write( JSON.stringify(message) + '\n' );
 };
 
 var checkMessage = function (data) {

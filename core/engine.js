@@ -87,7 +87,17 @@ var Engine = {
       }
 
     }
-  }
+  },
+
+  createPlayer: function(id, name) {
+    var player = new Player(2, 2);
+    player.id = id;
+    player.name = name;
+  },
+
+  createBomb: function() {
+  },
+
 }
 
 function spliceContent(x) {
@@ -133,7 +143,7 @@ function moveThis( aux ) {
       aux.direction = "none";
       return;
   }
-  
+
   spliceContent(aux);
   aux.pos.x = new_pos.x;
   aux.pos.y = new_pos.y;

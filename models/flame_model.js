@@ -9,4 +9,5 @@ function Flame(pos) {
   Engine.matrices[pos.x][pos.y].content.push(this);
   Engine.flames.push(this);
 }
+
 module.exports = Flame;

@@ -1,5 +1,6 @@
 GameRules = require('./game_rules.js');
 Engine = require('./engine.js');
+Message = require('./message.js');
 var Ticker = require('./ticker.js');
 
 var Environment = {
@@ -11,12 +12,28 @@ var Environment = {
   validating: function(obj) { // JSON object
     // validating the json
     // if is ok, we will process it
-    console.log( obj );
     Environment.process(obj);
   },
 
   process: function(obj) {
     // we will process the obj
+    switch (obj.event) {
+      case 'game_state':
+        Message.baseQueue.push(function() {
+          Message.sendGameState(obj.from_id);
+        });
+        break;
+      case 'new_player':
+        Ticker.queue.push( (function(obj) {
+          return function() {
+            Engine.createPlayer(obj.from_id, obj.name);
+          }
+        })(obj) );
+        break;
+      default:
+        Message.send(obj, "This is not a valid event");
+        break;
+    }
   },
 
   // it gets just one parameter, an obj
