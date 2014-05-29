@@ -53,11 +53,15 @@ var Environment = {
         break;
 
       case 'move':
-        Ticker.queue.push( (function(from_id, direction) {
-          return function() {
-            Engine.movePlayer(from_id, direction);
-          }
-        })(obj.from_id, obj.direction) );
+        if( Object.prototype.toString.call( obj.direction ) === '[object Array]' ) {
+          Ticker.queue.push( (function(from_id, direction) {
+            return function() {
+              Engine.movePlayer(from_id, direction);
+            }
+          })(obj.from_id, obj.direction) );
+        } else {
+          Message.send(obj, "Direction should be array");
+        }
         break;
       default:
         Message.send(obj, "This is not a valid event");
