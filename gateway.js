@@ -1,5 +1,3 @@
-process.name = "GATEWAY";
-
 process.on('message', function(message) {
   sendToClients(message);
 });
@@ -48,7 +46,7 @@ var server = net.createServer( function (client) {
     }
   });
 
-  client.on("end", function () {
+  client.on("close", function () {
     console.log("Client disconnected:", client.id);
   });
 

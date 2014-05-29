@@ -20,7 +20,7 @@ var Client = function(key, client) {
     }
   });
 
-  client.on("end", function () {
+  client.on("close", function () {
     console.log("Client disconnected:", client.id);
     CLIENTS.splice( CLIENTS.indexOf(client), 1);
     self.kill();
