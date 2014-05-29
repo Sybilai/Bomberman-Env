@@ -10,7 +10,8 @@ var Engine = {
     "left": {x: -1, y: 0},
     "right": {x: 1, y: 0},
     "up": {x: 0, y: -1},
-    "down": {x: 0, y: 1}
+    "down": {x: 0, y: 1},
+    "none": {x: 0, y: 0}
   },
 
   players: [],
@@ -45,7 +46,7 @@ var Engine = {
   },
 
   updatePlayers: function() {
-    // move( "players" );
+    move( "players" );
   },
 
   updateBombs: function() {
@@ -111,14 +112,23 @@ var Engine = {
       return;
     }
 
-    if (direction !== "none") {
-      player.direction = direction;
-      var now = GameRules.currentFrame;
-      if (now - player.lastUpdate > GameRules.players.speed) {
-        moveThis( player );
-        player.direction = "none";
-        player.lastUpdate = now;
+    for (var i = 0, l = direction.length; i < l; ++i) {
+      switch (direction[i]) {
+        case "up": break;
+        case "down": break;
+        case "left": break;
+        case "right": break;
+        case "none": break;
+        default:
+          direction.splice(i, 1);
+          --i;
+          --l;
+          break;
       }
+    }
+    console.log(direction);
+    if (direction.length !== 0) {
+      player.direction = direction;
     }
   },
 
@@ -166,7 +176,7 @@ function move( key ) {
   for (var i = 0, _ilen = Engine[key].length; i < _ilen; ++i) {
     var aux = Engine[key][i];
 
-    if (aux.direction !== "none") {
+    if ((typeof aux.direction === "string" && aux.direction !== "none") || (typeof aux.direction === "object" && aux.direction.length > 0)) {
       var now = GameRules.currentFrame;
       if (now - aux.lastUpdate > GameRules[key].speed) {
         moveThis( aux );
@@ -178,8 +188,10 @@ function move( key ) {
 
 function moveThis( aux ) {
   var new_pos = {};
-  new_pos.x = aux.pos.x + Engine.dir[ aux.direction ].x;
-  new_pos.y = aux.pos.y + Engine.dir[ aux.direction ].y;
+  if (typeof aux.direction === "object" && aux.direction.length === 0) return;
+  var dir = (typeof aux.direction === "string") ? aux.direction : aux.direction.shift();
+  new_pos.x = aux.pos.x + Engine.dir[ dir ].x;
+  new_pos.y = aux.pos.y + Engine.dir[ dir ].y;
 
   switch (Engine.matrices[new_pos.x][new_pos.y].isBlocked()) {
     case "mov":
@@ -191,7 +203,7 @@ function moveThis( aux ) {
       for (var i = 0, _ilen = Engine.matrices[new_pos.x][new_pos.y].content.length; i < _ilen; ++i) {
         var el = Engine.matrices[new_pos.x][new_pos.y].content[i];
         if (el.isBlocking === "mov") {
-          el.direction = aux.direction;
+          el.direction = dir;
         }
       }
       break;
@@ -205,7 +217,6 @@ function moveThis( aux ) {
   aux.pos.x = new_pos.x;
   aux.pos.y = new_pos.y;
   Engine.matrices[new_pos.x][new_pos.y].content.push(aux);
-
 }
 
 module.exports = Engine;

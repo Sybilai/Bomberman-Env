@@ -6,7 +6,7 @@ var GameRules = {
   bombs: {
     life: 120, //frames
     range: 1,  //blocks
-    speed: 1  //frames/block
+    speed: 2  //frames/block
   },
 
   flames: {
@@ -14,11 +14,11 @@ var GameRules = {
   },
 
   players: {
-    speed: 2  //frames/block
+    speed: 4  //frames/block
   },
 
   currentFrame: 0,
-  framesPerSecond: 1
+  framesPerSecond: 10
 };
 
 module.exports = GameRules;
