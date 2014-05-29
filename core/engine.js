@@ -45,7 +45,7 @@ var Engine = {
   },
 
   updatePlayers: function() {
-    move( "players" );
+    // move( "players" );
   },
 
   updateBombs: function() {
@@ -90,12 +90,36 @@ var Engine = {
     while (true) {
       _x = parseInt(Math.random()*1000)%GameRules.sizeN;
       _y = parseInt(Math.random()*1000)%GameRules.sizeM;
-      console.log(_x, _y);
       if ( !Engine.matrices[_x][_y].isBlocked() ) break;
     }
     var player = new Player(_x, _y);
     player.id = id;
     player.name = name;
+  },
+
+  movePlayer: function(id, direction) {
+    var player;
+    for (var i = 0, l = Engine.players.length; i < l; ++i) {
+      var v = Engine.players[i];
+      if (v.id === id) {
+        player = v;
+        break;
+      }
+    }
+
+    if (!player) {
+      return;
+    }
+
+    if (direction !== "none") {
+      player.direction = direction;
+      var now = GameRules.currentFrame;
+      if (now - player.lastUpdate > GameRules.players.speed) {
+        moveThis( player );
+        player.direction = "none";
+        player.lastUpdate = now;
+      }
+    }
   },
 
   destroyPlayer: function(id) {
@@ -176,6 +200,7 @@ function moveThis( aux ) {
       return;
   }
 
+  Message.sendMove(new_pos.x, new_pos.y, aux.object_id);
   spliceContent(aux);
   aux.pos.x = new_pos.x;
   aux.pos.y = new_pos.y;

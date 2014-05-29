@@ -8,7 +8,6 @@ var Ticker = {
     }
 
     Engine.update();
-    // if (Draw) Draw.update();
 
     Message.sendAll();
 

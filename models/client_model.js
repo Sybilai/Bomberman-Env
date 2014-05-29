@@ -12,6 +12,11 @@ var Client = function(key, client) {
     if (data = checkMessage(data)) {
       data.from_id = client.id;
       sendMessage(data);
+    } else {
+      self.sendMessage({
+        event: "error",
+        message: "What is that?"
+      });
     }
   });
 

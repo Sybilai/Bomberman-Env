@@ -3,15 +3,10 @@ var GameRules = {
   sizeM: 15,
 
 
-  speed: {           // frames/block
-    players: 20,
-    bombs: 10
-  },
-
   bombs: {
     life: 120, //frames
     range: 1,  //blocks
-    speed: 10  //frames/block
+    speed: 1  //frames/block
   },
 
   flames: {
@@ -19,7 +14,7 @@ var GameRules = {
   },
 
   players: {
-    speed: 20  //frames/block
+    speed: 2  //frames/block
   },
 
   currentFrame: 0,

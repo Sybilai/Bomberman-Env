@@ -52,6 +52,17 @@ var Message = {
     });
   },
 
+  sendMove: function( _x, _y, object_id ) {
+    this.queue.push({
+      data: {
+        event: "move_entity",
+        x: _x,
+        y: _y,
+        object_id: object_id
+      }
+    });
+  },
+
   sendAll: function() {
     while (this.baseQueue.length) {
       this.baseQueue.shift()();

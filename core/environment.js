@@ -52,6 +52,17 @@ var Environment = {
         })(obj.from_id) );
         break;
 
+      case 'move':
+        if (obj.direction == "up" || obj.direction == "down" || obj.direction == "left" || obj.direction == "right") {
+          Ticker.queue.push( (function(from_id, direction) {
+            return function() {
+              Engine.movePlayer(from_id, direction);
+            }
+          })(obj.from_id, obj.direction) );
+        } else {
+          Message.send(obj, "Wrong direction!");
+        }
+        break;
       default:
         Message.send(obj, "This is not a valid event");
         break;
