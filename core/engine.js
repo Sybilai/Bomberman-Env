@@ -85,7 +85,15 @@ var Engine = {
   },
 
   createPlayer: function(id, name) {
-    var player = new Player(2, 2);
+    // search position start
+    var _x, _y;
+    while (true) {
+      _x = parseInt(Math.random()*1000)%GameRules.sizeN;
+      _y = parseInt(Math.random()*1000)%GameRules.sizeM;
+      console.log(_x, _y);
+      if ( !Engine.matrices[_x][_y].isBlocked() ) break;
+    }
+    var player = new Player(_x, _y);
     player.id = id;
     player.name = name;
   },
