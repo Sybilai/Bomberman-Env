@@ -63,6 +63,14 @@ var Environment = {
           Message.send(obj, "Direction should be array");
         }
         break;
+
+      case 'bomb':
+        Ticker.queue.push( (function(from_id) {
+          return function() {
+            Engine.createBomb(from_id);
+          }
+        })(obj.from_id) );
+        break;
       default:
         Message.send(obj, "This is not a valid event");
         break;

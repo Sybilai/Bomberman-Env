@@ -4,13 +4,13 @@ var GameRules = {
 
 
   bombs: {
-    life: 120, //frames
+    life: 24, //frames
     range: 1,  //blocks
     speed: 2  //frames/block
   },
 
   flames: {
-    life: 60   //frames
+    life: 12   //frames
   },
 
   players: {

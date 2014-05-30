@@ -10,6 +10,8 @@ var Client = function(key, client) {
 
   client.on("data", function (data) {
     if (data = checkMessage(data)) {
+      if (data.event === "new_player") return;
+      if (data.event === "destroy_player") return;
       data.from_id = client.id;
       sendMessage(data);
     } else {

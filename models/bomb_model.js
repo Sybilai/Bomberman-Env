@@ -1,12 +1,13 @@
-function Bomb(_x, _y) {
+function Bomb(player_id, _x, _y) {
   this.isBlocking = "mov";
   this.mortal = true;
   this.type = "bomb";
+  this.player_id = player_id;
   this.pos = {
     x: _x,
     y: _y
   };
-  this.range = GameRules.basicBombRange;
+  this.range = GameRules.bombs.range;
   this.spawnFrame = GameRules.currentFrame;
   this.lastUpdate = 0;
   this.direction = "none";
@@ -20,7 +21,6 @@ function() {
 
   new Flame(bomb.pos);
 
-  // left
   function flame(key) {
     for (var i = 1; i <= bomb.range; ++i) {
       var new_pos = {};

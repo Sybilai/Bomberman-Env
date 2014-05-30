@@ -69,7 +69,7 @@ var Message = {
     }
     while (this.queue.length) {
       var aux = this.queue.shift();
-      aux.timestamp = GameRules.currentFrame;
+      aux.data.timestamp = GameRules.currentFrame;
       Environment.sendMessage(aux);
     }
   }

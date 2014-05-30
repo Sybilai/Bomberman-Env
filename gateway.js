@@ -66,8 +66,6 @@ var checkKey = function (data) {
 }
 
 sendMessage = function (obj) {
-  if (obj.event === "new_player") return;
-  if (obj.event === "destroy_player") return;
   console.log( obj );
   process.send(obj);
 }

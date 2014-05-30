@@ -77,8 +77,7 @@ var Engine = {
       }
 
       if (GameRules.currentFrame - flame.spawnFrame >= GameRules.flames.life) {
-        spliceContent(flame);
-        Engine.flames.splice(i, 1);
+        Engine.destroy("flames", flame);
         --i;
       }
 
@@ -99,14 +98,7 @@ var Engine = {
   },
 
   movePlayer: function(id, direction) {
-    var player;
-    for (var i = 0, l = Engine.players.length; i < l; ++i) {
-      var v = Engine.players[i];
-      if (v.id === id) {
-        player = v;
-        break;
-      }
-    }
+    var player = searchById("players", id);
 
     if (!player) {
       return;
@@ -133,18 +125,12 @@ var Engine = {
   },
 
   destroyPlayer: function(id) {
-    var aux;
-    for (var i = 0, l = Engine.players.length; i < l; ++i) {
-      if (Engine.players[i].id == id) {
-        aux = Engine.players[i];
-        break;
-      }
-    }
-
-    Engine.destroy("players", aux);
+    Engine.destroy("players", searchById("players", id));
   },
 
-  createBomb: function() {
+  createBomb: function(player_id) {
+    var player = searchById("players", player_id);
+    player.bomb();
   },
 
 
@@ -157,6 +143,7 @@ var Engine = {
   },
 
   destroy: function(key, data) {
+    if (typeof data === "undefined") return;
     spliceContent( data );
     Engine[key].splice(
       Engine[key].indexOf(data)
@@ -219,4 +206,12 @@ function moveThis( aux ) {
   Engine.matrices[new_pos.x][new_pos.y].content.push(aux);
 }
 
+function searchById(key, id) {
+  for (var i = 0, l = Engine[key].length; i < l; ++i) {
+    if (Engine[key][i].id == id) {
+      return Engine[key][i];
+    }
+  }
+  return undefined;
+}
 module.exports = Engine;

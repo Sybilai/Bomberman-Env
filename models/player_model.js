@@ -24,4 +24,9 @@ function() {
   Engine.destroy("players", this);
 };
 
+Player.prototype.bomb =
+function() {
+  new Bomb(this.id, this.pos.x, this.pos.y);
+};
+
 module.exports = Player;
