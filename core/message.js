@@ -63,6 +63,15 @@ var Message = {
     });
   },
 
+  sendGameOver: function( to_id ) {
+    this.queue.push({
+      only: [to_id],
+      data: {
+        event: "game_over"
+      }
+    });
+  },
+
   sendAll: function() {
     while (this.baseQueue.length) {
       this.baseQueue.shift()();

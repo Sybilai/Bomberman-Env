@@ -22,6 +22,7 @@ function Player(_x, _y) {
 Player.prototype.burn =
 function() {
   Engine.destroy("players", this);
+  Message.sendGameOver( this.id );
 };
 
 Player.prototype.bomb =
