@@ -1,5 +1,5 @@
 var GameRules = {
-  sizeN: 10,
+  sizeN: 20,
   sizeM: 15,
 
 
@@ -10,7 +10,7 @@ var GameRules = {
   },
 
   flames: {
-    life: 12   //frames
+    life: 12  //frames
   },
 
   players: {
