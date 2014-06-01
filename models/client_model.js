@@ -9,16 +9,22 @@ var Client = function(key, client) {
   client.removeAllListeners("error");
 
   client.on("data", function (data) {
-    if (data = checkMessage(data)) {
-      if (data.event === "new_player") return;
-      if (data.event === "destroy_player") return;
-      data.from_id = client.id;
-      sendMessage(data);
-    } else {
-      self.sendMessage({
-        event: "error",
-        message: "What is that?"
-      });
+    var messages = data.split('\n');
+    messages.pop();
+
+    while (messages.length) {
+      var message;
+      if (message = checkMessage(messages.shift())) {
+        if (message.event === "new_player") return;
+        if (message.event === "destroy_player") return;
+        message.from_id = client.id;
+        sendMessage(message);
+      } else {
+        self.sendMessage({
+          event: "error",
+          message: "What is that?"
+        });
+      }
     }
   });
 
@@ -65,6 +71,7 @@ function(message) {
 };
 
 var checkMessage = function (data) {
+  console.log(data);
   try {
     data = JSON.parse(data);
   } catch (e) {
