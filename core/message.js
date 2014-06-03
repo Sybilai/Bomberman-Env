@@ -92,7 +92,7 @@ var Message = {
         data: {
           event: "frame",
           frame: frame,
-          timestamp: GameRules.currentFrame;
+          timestamp: GameRules.currentFrame
         }
       });
     }
