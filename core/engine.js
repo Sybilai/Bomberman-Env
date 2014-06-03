@@ -37,6 +37,21 @@ var Engine = {
       new FixBlock(0, i);
       new FixBlock(N-1, i);
     }
+
+    for (var i = 2; i < N-2; i += 4) {
+      for (var j = 2; j < M-2; j += 2) {
+        var c = parseInt(Math.random()*10)%5;
+        switch (c) {
+          case 3:
+            new FixBlock(i+1, j);
+            new FixBlock(i+1, j+1);
+            break;
+          default:
+            new FixBlock(i, j);
+            break;
+        }
+      }
+    }
   },
 
   update: function () {
