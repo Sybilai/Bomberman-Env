@@ -73,13 +73,27 @@ var Message = {
   },
 
   sendAll: function() {
+    var frame = [];
     while (this.baseQueue.length) {
       this.baseQueue.shift()();
     }
+
     while (this.queue.length) {
       var aux = this.queue.shift();
       aux.data.timestamp = GameRules.currentFrame;
-      Environment.sendMessage(aux);
+      if (aux.only) {
+        Environment.sendMessage(aux);
+      } else {
+        frame.push(aux.data);
+      }
+    }
+    if (frame.length) {
+      Environment.sendMessage({
+        data: {
+          event: "frame",
+          frame: frame
+        }
+      });
     }
   }
 };

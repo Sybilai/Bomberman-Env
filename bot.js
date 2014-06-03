@@ -3,7 +3,7 @@ var net = require('net'),
 
 var lastFrame = Date.now();
 
-var socket = net.createConnection( data_center_server_port, "localhost", function() {
+var socket = net.createConnection( data_center_server_port, "sybilai.com", function() {
     socket.setEncoding('utf8');
     socket.write('{"name": "cezar"}');
     lastFrame = Date.now();
@@ -19,14 +19,13 @@ socket.on( 'data', function(data) {
 }).on('close', function() {
     console.log('Disconnected!');
 });
-
-setTimeout(function() {
-  lastFrame = Date.now();
-  console.log('caca');
-  socket.write('{"event":"bomb"}' + '\n');
-  socket.write('{"event":"move", "direction":["left","right","up","up"]}' + '\n');
-}, 1000);
-
-setTimeout(function() {
-  socket.write('{"event":"move", "direction":["left","right","up","up"]}' + '\n');
-}, 1000);
+socket.on('connect', function() {
+  var q = function() {
+    socket.write('{"event":"move", "direction":["left","right","up","left", "up", "up", "right"]}' + '\n');
+  };
+  q();
+  setInterval(q, 4000);
+  setInterval(function() {
+    socket.write('{"event":"bomb"}' + '\n');
+  }, 2000);
+});
