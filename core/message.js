@@ -80,8 +80,8 @@ var Message = {
 
     while (this.queue.length) {
       var aux = this.queue.shift();
-      aux.data.timestamp = GameRules.currentFrame;
       if (aux.only) {
+        aux.data.timestamp = GameRules.currentFrame;
         Environment.sendMessage(aux);
       } else {
         frame.push(aux.data);
@@ -91,7 +91,8 @@ var Message = {
       Environment.sendMessage({
         data: {
           event: "frame",
-          frame: frame
+          frame: frame,
+          timestamp: GameRules.currentFrame;
         }
       });
     }
