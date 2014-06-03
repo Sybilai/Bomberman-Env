@@ -38,13 +38,11 @@ var Engine = {
       new FixBlock(N-1, i);
     }
 
-    for (var i = 2; i < N-2; i += 4) {
+    for (var i = 2; i < N-2; i += 2) {
       for (var j = 2; j < M-2; j += 2) {
-        var c = parseInt(Math.random()*10)%5;
-        switch (c) {
-          case 3:
-            new FixBlock(i+1, j);
-            new FixBlock(i+1, j+1);
+        var c = parseInt(Math.random()*1000)%10;
+        switch (c%3) {
+          case 2:
             break;
           default:
             new FixBlock(i, j);
