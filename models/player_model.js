@@ -27,7 +27,9 @@ function() {
 
 Player.prototype.bomb =
 function() {
-  new Bomb(this.id, this.pos.x, this.pos.y);
+  if (Engine.matrices[this.pos.x][this.pos.y].content.length === 1) {
+    var bomb = new Bomb(this.id, this.pos.x, this.pos.y);
+  }
 };
 
 module.exports = Player;

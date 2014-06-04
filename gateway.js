@@ -39,7 +39,7 @@ var server = net.createServer( function (client) {
     var key;
     if ( key = checkKey(data) ) {
       console.log("Valid key", client.id, data);
-      client.write("{'event': 'login', 'your_id': "+client.id+"}" + '\n');
+      client.write('{"event": "login", "your_id": '+client.id+'}' + '\n');
       CLIENTS.push( new Client(key, client) );
     } else {
       console.log("Invalid key", client.id, data);
