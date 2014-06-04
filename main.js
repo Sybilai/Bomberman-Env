@@ -1,4 +1,5 @@
 Environment = require('./core/environment.js');
+var zlib = require('zlib');
 
 var spawn = require('child_process').spawn
   , fs    = require('fs')
@@ -38,7 +39,12 @@ VISUALIZER.on('message', function(message) {
 
 Environment.sendMessage = function(obj) {
   console.log("P:", JSON.stringify(obj));
-  GATEWAY.send(obj);
+  zlib.gzip(JSON.stringify(obj.data), function(err, buffer) {
+    if (!err) {
+      obj.data = buffer.toString("base64");
+      GATEWAY.send(obj);
+    }
+  });
 
   if (!obj.only) {
     VISUALIZER.send(obj.data);

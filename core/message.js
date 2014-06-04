@@ -87,6 +87,7 @@ var Message = {
         frame.push(aux.data);
       }
     }
+
     if (frame.length) {
       Environment.sendMessage({
         data: {
