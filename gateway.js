@@ -15,6 +15,10 @@ function sendToClients(message) {
     }
 
     CLIENTS[i].sendMessage( message.data );
+    if (message.event === "game_over") {
+      CLIENTS[i].is_dead = true;
+      CLIENTS[i].client.destroy();
+    }
   }
 }
 

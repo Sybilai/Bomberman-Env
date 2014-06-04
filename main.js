@@ -39,6 +39,7 @@ VISUALIZER.on('message', function(message) {
 
 Environment.sendMessage = function(obj) {
   console.log("P:", JSON.stringify(obj));
+  obj.event = obj.data.event;
   zlib.gzip(JSON.stringify(obj.data), function(err, buffer) {
     if (!err) {
       obj.data = buffer.toString("base64");
