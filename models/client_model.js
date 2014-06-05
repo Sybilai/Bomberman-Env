@@ -63,7 +63,7 @@ function() {
 
 Client.prototype.sendMessage =
 function(message) {
-  this.client.write( JSON.stringify(message) + '\n' );
+  this.client.write( message + '\n' );
 };
 
 var checkMessage = function (data) {
