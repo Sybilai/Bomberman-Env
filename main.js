@@ -46,6 +46,7 @@ Environment.sendMessage = function(obj) {
     } else {
       console.log(err);
     }
+    console.log(obj.event, buffer.toString("base64"));
   });
 
   if (!obj.only) {

@@ -22,9 +22,9 @@ function doIt() {
       var message = messages.shift();
       zlib.unzip(new Buffer(message, 'base64'), function(err, buffer) {
         if (!err) {
-//          console.log(buffer.toString());
+          console.log(JSON.parse(buffer.toString()).event);
         } else {
-          console.log(message, err);
+         // console.log(message, err);
         }
       });
     }
