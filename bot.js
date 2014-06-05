@@ -15,9 +15,24 @@ function doIt() {
 
 
   socket.on( 'data', function(data) {
+<<<<<<< Updated upstream
     var now = Date.now();
     console.log((now-lastFrame) + "ms", data);
     lastFrame = now;
+=======
+    var messages = data.split('\n');
+    messages.pop();
+    while (messages.length) {
+      var message = messages.shift();
+      zlib.unzip(new Buffer(message, 'base64'), function(err, buffer) {
+        if (!err) {
+          console.log(message);
+        } else {
+          console.log(message, err);
+        }
+      });
+    }
+>>>>>>> Stashed changes
   }).on('connect', function() {
       console.log('Connected!');
   }).on('close', function() {
