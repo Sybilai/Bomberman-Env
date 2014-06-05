@@ -1,5 +1,6 @@
 var net = require('net'),
     data_center_server_port = 8124;
+var zlib = require('zlib');
 
 var lastFrame = Date.now();
 var intQ, intV;
@@ -7,7 +8,7 @@ function doIt() {
   clearInterval(intQ);
   clearInterval(intV);
   console.log('----------------------------------------------------');
-  var socket = net.createConnection( data_center_server_port, "sybilai.com", function() {
+  var socket = net.createConnection( data_center_server_port, "localhost", function() {
       socket.setEncoding('utf8');
       socket.write('{"name": "cezar"}');
       lastFrame = Date.now();
@@ -15,9 +16,18 @@ function doIt() {
 
 
   socket.on( 'data', function(data) {
-    var now = Date.now();
-    console.log((now-lastFrame) + "ms", data);
-    lastFrame = now;
+    var messages = data.split('\n');
+    messages.pop();
+    while (messages.length) {
+      var message = messages.shift();
+      zlib.unzip(new Buffer(message, 'base64'), function(err, buffer) {
+        if (!err) {
+//          console.log(buffer.toString());
+        } else {
+          console.log(message, err);
+        }
+      });
+    }
   }).on('connect', function() {
       console.log('Connected!');
   }).on('close', function() {
