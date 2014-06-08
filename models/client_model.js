@@ -64,10 +64,13 @@ function() {
 Client.prototype.sendMessage =
 function(message) {
   var x = JSON.stringify(message);
-  this.client.send(x + '\n' );
+  try {
+    this.client.send(x + '\n' );
+  } catch (e) {
+  }
   if (message.event === "game_over") {
     this.is_dead = true;
-    this.client.destroy();
+    this.client.close();
   }
 };
 

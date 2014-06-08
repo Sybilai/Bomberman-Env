@@ -15,12 +15,28 @@ function doIt() {
 
 
   socket.on( 'data', function(data) {
+<<<<<<< Updated upstream
     var now = Date.now();
     console.log((now-lastFrame) + "ms", data);
 
     while (d
 
     lastFrame = now;
+=======
+    var messages = data.split('|');
+    messages.pop();
+    while (messages.length) {
+      var message = messages.shift();
+      while ('0' <= message[0] && message[0] <= '9') {
+        message.splice(0,1);
+      }
+        try {
+          JSON.parse(message);
+        } catch(e) {
+          console.log(message);
+        }
+    }
+>>>>>>> Stashed changes
   }).on('connect', function() {
       console.log('Connected!');
   }).on('close', function() {

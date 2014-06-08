@@ -29,7 +29,6 @@ var server_port = 8124
   ;
 var server = new WebSocketServer({port: 8124});
 server.on('connection', function (client) {
-
   client.id = ++counter_clients;
 
   console.log("Connected:", client.id);
@@ -42,7 +41,7 @@ server.on('connection', function (client) {
       CLIENTS.push( new Client(key, client) );
     } else {
       console.log("Invalid key", client.id, data);
-      client.destroy();
+      client.close();
     }
   });
 
