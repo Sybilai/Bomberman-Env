@@ -22,24 +22,23 @@ var Client = require('./models/client_model.js');
 CLIENTS = [];
 
 var server_port = 8124
-  , net = require('net')
+  , WebSocketServer = require('ws').Server
   , encoding = "utf8"
 
   , counter_clients = 0
   ;
+var server = new WebSocketServer({port: 8124});
+server.on('connection', function (client) {
 
-var server = net.createServer( function (client) {
-
-  client.setEncoding( encoding );
   client.id = ++counter_clients;
 
   console.log("Connected:", client.id);
 
-  client.on("data", function (data) {
+  client.on("message", function (data) {
     var key;
     if ( key = checkKey(data) ) {
       console.log("Valid key", client.id, data);
-      client.write('{"event": "login", "your_id": '+client.id+'}' + '\n');
+      client.send('{"event": "login", "your_id": '+client.id+'}' + '\n');
       CLIENTS.push( new Client(key, client) );
     } else {
       console.log("Invalid key", client.id, data);
@@ -55,7 +54,7 @@ var server = net.createServer( function (client) {
     console.log("Ignoring exception:", exc);
   });
 
-}).listen(server_port);
+});
 
 var checkKey = function (data) {
   try {

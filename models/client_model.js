@@ -4,11 +4,11 @@ var Client = function(key, client) {
   this.client = client;
   this.is_dead = false;
 
-  client.removeAllListeners("data");
+  client.removeAllListeners("message");
   client.removeAllListeners("end");
   client.removeAllListeners("error");
 
-  client.on("data", function (data) {
+  client.on("message", function (data) {
     var messages = data.split('\n');
     messages.pop();
 
@@ -64,7 +64,7 @@ function() {
 Client.prototype.sendMessage =
 function(message) {
   var x = JSON.stringify(message);
-  this.client.write(x.length + x + '\n' );
+  this.client.send(x + '\n' );
   if (message.event === "game_over") {
     this.is_dead = true;
     this.client.destroy();
