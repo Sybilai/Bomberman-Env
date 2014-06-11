@@ -77,3 +77,102 @@ Pentru a se misca in sus, apoi la dreapta, apoi in jos:
 ```
 
 ### Environment's events
+Fiecare event care vine de la Environment are in interior un timestamp care reprezinta frame-ul la care a fost trimis mesajul.
+
+
+#### Event login
+Acesta e primul mesaj pe care-l veti primi care va reprezenta id-ul dumneavoastra in joc.
+```
+{"event": "login", 
+ "your_id": 2
+}
+```
+
+#### Event game_rules
+Acesta este un event care descrie regulile jocului care nu se schimba pe parcursul acestuia. Dimensiunea gridului, viata/viteza/rangeul bombelor/flacarilor/playerilor.
+
+```
+{"event":"game_rules",
+ "data":{
+  "sizeN":20,
+  "sizeM":15,
+  "bombs":{
+   "life":24,
+   "range":1,
+   "speed":2
+  },
+  "flames":{
+   "life":12
+  },
+  "players":{
+   "speed":4
+  },
+  "currentFrame":1015,
+  "framesPerSecond":10
+ },
+ "timestamp":1015
+}
+```
+
+#### Event game_state
+
+```
+{"event":"game_state",
+ "matrices":[ [block, block .. block] .. [block, block .. block] ]
+}
+```
+
+#### Event frame
+Environmentul va raspunde cu acest event de fiecare data cand se schimba ceva in joc. Acest event contine un array cu 3 tipuri de evenimente: `new_entity`, `move_entity`, `destroy_entity`.
+
+```
+{"event":"frame",
+ "frame": [event, event, event]
+}
+```
+
+#### Event new_entity
+Eventul acesta este trimis in momentul in care a aparut o noua entitate.
+```
+{"event":"new_entity",
+ "data": entity
+}
+```
+
+#### Event move_entity
+Eventul acesta este trimis in momentul in care a aparut o noua entitate.
+```
+{"event":"move_entity",
+ "object_id": <<id>>,
+ "pos":{"x": 1, "y": 0}
+}
+```
+
+#### Event destroy_entity
+Eventul acesta este trimis in momentul in care a aparut o noua entitate.
+```
+{"event":"destroy_entity",
+ "object_id": <<id>>
+}
+```
+
+### Objects
+
+#### Block
+```
+{"content": [entity, entity, entity]}
+```
+
+#### Entity
+```
+{"isBlocking":false,
+ "mortal":true,
+ "type":"player/bomb/flame/fixblock",
+ "pos":{"x":10,"y":8},
+ "powerups":{"canKick":true},
+ "lastUpdate":0,
+ "direction":"none",
+ "object_id":112,
+ "id":10
+}
+```
