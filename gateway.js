@@ -62,6 +62,7 @@ var checkKey = function (data) {
   } catch (e) {
     return false;
   }
+  if (typeof data.name !== "string" || typeof data.token !== "string") return false;
   return data;
 }
 

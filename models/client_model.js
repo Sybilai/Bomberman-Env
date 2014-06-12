@@ -55,7 +55,7 @@ Client.prototype.kill =
 function() {
   if (this.is_dead) return;
   this.is_dead = true;
-
+  console.log('a intra kill');
   sendMessage({
     event: "destroy_player",
     from_id: this.client.id,

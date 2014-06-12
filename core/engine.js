@@ -143,9 +143,10 @@ var Engine = {
 
   destroyPlayer: function(id, token) {
     var player = searchById("players", id);
-    http.request({host: 'sybilai.com',
-                  path: "/api/new_scoring?token="+token+"&bombs="+player.bombs+"&kills="+player.kills}).end();
-
+    try {
+      http.request({host: 'sybilai.com',
+                    path: "/api/new_scoring?token="+token+"&bombs="+player.bombs+"&kills="+player.kills}).end();
+    } catch(e) { }
     Engine.destroy("players", player);
   },
 

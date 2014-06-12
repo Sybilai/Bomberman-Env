@@ -47,6 +47,7 @@ var Environment = {
       case 'destroy_player':
         Ticker.queue.push( (function(from_id, token) {
           return function() {
+            console.log("avem si token", token);
             Engine.destroyPlayer(from_id, token);
           }
         })(obj.from_id, obj.token) );
