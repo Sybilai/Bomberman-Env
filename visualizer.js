@@ -27,7 +27,3 @@ wss.on('connection', function(ws) {
 
   process.send(ws.id);
 });
-/*
-process.once("exit", function() {
-  process.exit(1);
-});*/

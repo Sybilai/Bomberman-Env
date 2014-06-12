@@ -63,11 +63,13 @@ var Message = {
     });
   },
 
-  sendGameOver: function( to_id ) {
+  sendGameOver: function( to_id, bombs, kills ) {
     this.queue.push({
       only: [to_id],
       data: {
-        event: "game_over"
+        event: "game_over",
+        bombs: bombs,
+        kills: kills
       }
     });
   },

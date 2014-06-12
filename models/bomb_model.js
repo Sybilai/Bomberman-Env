@@ -29,7 +29,10 @@ function() {
       if (Engine.matrices[new_pos.x][new_pos.y].isBlocked() === true) {
         break;
       }
-      new Flame(new_pos);
+      var flame = new Flame(new_pos);
+      if (bomb.killed) {
+        flame.killed = bomb.killed;
+      }
     }
   };
 

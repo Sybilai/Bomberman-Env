@@ -84,6 +84,9 @@ var Engine = {
       for (var j = 0; j < ct.length; ++j) {
         if (ct[j].mortal === true) {
           if (ct[j].burn) {
+            if (ct[j].type == "player") {
+              if (flame.killed) flame.killed();
+            }
             ct[j].burn();
           }
         }

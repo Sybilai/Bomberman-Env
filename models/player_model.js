@@ -12,23 +12,28 @@ function Player(_x, _y) {
     canKick: true
   };
 
-  this.name = "Barman";
   this.lastUpdate = 0;
   this.direction = "none";
-
+  this.bombs = 0;
+  this.kills = 0;
   Engine.spawn("players", _x, _y, this);
 }
 
 Player.prototype.burn =
 function() {
   Engine.destroy("players", this);
-  Message.sendGameOver( this.id );
+  Message.sendGameOver( this.id, this.bombs, this.kills );
 };
 
 Player.prototype.bomb =
 function() {
   if (Engine.matrices[this.pos.x][this.pos.y].content.length === 1) {
+    ++this.bombs;
     var bomb = new Bomb(this.id, this.pos.x, this.pos.y);
+    var self = this;
+    bomb.killed = function() {
+      ++self.kills;
+    }
   }
 };
 

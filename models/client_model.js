@@ -1,6 +1,6 @@
 var Client = function(key, client) {
   var self = this;
-  this.name = key.name;
+  this.token = key.token;
   this.client = client;
   this.is_dead = false;
 
@@ -69,6 +69,7 @@ function(message) {
   } catch (e) {
   }
   if (message.event === "game_over") {
+    recordScore(this.token, message.bombs, message.kills);
     this.is_dead = true;
     this.client.close();
   }
@@ -83,5 +84,11 @@ var checkMessage = function (data) {
   }
   return data;
 };
+
+var http = require('http');
+var recordScore = function (token, bombs, kills) {
+  http.request({host: 'sybilai.com',
+               path: "/apn/new_scoring?token="+token+"&bombs="+bombs+"&kills="+kills}).end();
+}
 
 module.exports = Client;

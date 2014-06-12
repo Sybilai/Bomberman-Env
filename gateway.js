@@ -24,10 +24,11 @@ CLIENTS = [];
 var server_port = 8124
   , WebSocketServer = require('ws').Server
   , encoding = "utf8"
-
   , counter_clients = 0
   ;
+
 var server = new WebSocketServer({port: 8124});
+
 server.on('connection', function (client) {
   client.id = ++counter_clients;
 
@@ -68,8 +69,3 @@ sendMessage = function (obj) {
   console.log( obj );
   process.send(obj);
 }
-/*
-process.once("exit", function() {
-  console.log('what');
-  process.exit(1);
-});*/
