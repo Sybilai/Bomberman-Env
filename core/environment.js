@@ -45,11 +45,11 @@ var Environment = {
         break;
 
       case 'destroy_player':
-        Ticker.queue.push( (function(from_id) {
+        Ticker.queue.push( (function(from_id, token) {
           return function() {
-            Engine.destroyPlayer(from_id);
+            Engine.destroyPlayer(from_id, token);
           }
-        })(obj.from_id) );
+        })(obj.from_id, obj.token) );
         break;
 
       case 'move':

@@ -1,5 +1,6 @@
 var Client = function(key, client) {
   var self = this;
+  this.name = key.name;
   this.token = key.token;
   this.client = client;
   this.is_dead = false;
@@ -57,7 +58,8 @@ function() {
 
   sendMessage({
     event: "destroy_player",
-    from_id: this.client.id
+    from_id: this.client.id,
+    token: this.token
   });
 };
 
@@ -88,7 +90,7 @@ var checkMessage = function (data) {
 var http = require('http');
 var recordScore = function (token, bombs, kills) {
   http.request({host: 'sybilai.com',
-               path: "/apn/new_scoring?token="+token+"&bombs="+bombs+"&kills="+kills}).end();
+               path: "/api/new_scoring?token="+token+"&bombs="+bombs+"&kills="+kills}).end();
 }
 
 module.exports = Client;

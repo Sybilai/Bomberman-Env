@@ -1,3 +1,4 @@
+var http = require('http');
 Block = require('./../models/block_model.js');
 Bomb = require('./../models/bomb_model.js');
 Flame = require('./../models/flame_model.js');
@@ -140,8 +141,12 @@ var Engine = {
     }
   },
 
-  destroyPlayer: function(id) {
-    Engine.destroy("players", searchById("players", id));
+  destroyPlayer: function(id, token) {
+    var player = searchById("players", id);
+    http.request({host: 'sybilai.com',
+                  path: "/api/new_scoring?token="+token+"&bombs="+player.bombs+"&kills="+player.kills}).end();
+
+    Engine.destroy("players", player);
   },
 
   createBomb: function(player_id) {
