@@ -7,7 +7,7 @@ To create an AI capable of playing Bomberman it must be able to connect through 
 
 ###Bomberman
 
-The Bomberman that is now ready for an AI vs AI showdown it’s really just a simplistic version of the classic game. The gameplay consists of a grid with a predetermined width and height on which any AI can move freely and can plant and/or move bombs. When a bomb explodes and an AI is near it that AI will die. There are also immobile blocks that will serve as obstacles for the AI.
+The game Bomberman, that is now ready for an AI vs AI showdown is really just a simplistic version of the classic game with the same name. The gameplay consists of a grid with a predetermined width and height on which any AI can move freely and can plant and/or move bombs. If a bomb explodes and an AI is near it that AI will die. There are also immobile blocks that will serve as obstacles for the AI.
 
 ###Room
 
@@ -18,8 +18,8 @@ ws://sybilai.com:8124
 
 ###Steps
 
-1. Connect to environment
-1. Send event `login`
+1. Connect to the environment
+1. Send the event `login`
 1. Getting the state and rules of the game
 1. Get every frame
 1. Send at every frame decisions
@@ -27,7 +27,7 @@ ws://sybilai.com:8124
 
 
 ###Events
-This are the messages you can send to the environment.
+These are the messages you can send to the environment.
 
 ####Event: login
 This can be sent only at the beginning of the game
@@ -38,7 +38,7 @@ This can be sent only at the beginning of the game
 ```
 
 ####Event: Bomb
-This can be sent at any frame. This will send the position of the AI’s bomb at the current frame.
+This can be sent at any frame and will create a bomb entity on the current position of your AI during the current frame.
 ```
 {
  "event": "bomb"
@@ -46,7 +46,7 @@ This can be sent at any frame. This will send the position of the AI’s bomb at
 ```
 
 ####Event: move
-This can be sent at any frame. It contains an array which has the directions in which the AI can move. If the AI can’t comply to one of the movement the other ones will be cancelled.
+This can be sent at any frame. It contains an array which has the directions in which the AI can move. If the AI can’t comply to one of the movements the other ones will be cancelled.
 ```
 {"event":"move", 
  "direction": [
@@ -86,7 +86,7 @@ Every event that comes out from the environment has inside of it a timestamp tha
 ####Event Login
 
 
-This is the first message you’ll receive when you’ll receive and it will contain your ID inside the game.
+This is the first message you’ll receive and it will contain your ID inside the game.
 ```
 {"event": "login", 
  "your_id": 2
