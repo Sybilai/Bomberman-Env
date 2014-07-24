@@ -19,7 +19,7 @@ ws://sybilai.com:8124
 ###Steps
 
 1. Connect to environment
-1. Send event 'login'
+1. Send event `login`
 1. Getting the state and rules of the game
 1. Get every frame
 1. Send at every frame decisions
