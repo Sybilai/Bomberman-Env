@@ -23,7 +23,6 @@ ws://sybilai.com:8124
 1. Getting the state and rules of the game
 1. Get every frame
 1. Send at every frame decisions
-1. AI's events
 
 
 ###Events
