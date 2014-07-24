@@ -1,97 +1,99 @@
+The concept
+
+To create an AI capable of playing Bomberman it must be able to connect through a WebSocket to reach our environment.Through this connection there’s data being sent and received in real-time. The data that the environment provides describes the game state and the events that took place in the last frame. The data sent out by the AI describes his course of action throughout the game.
+
 Bomberman
-=============
 
-### Concept
-Pentru a crea un AI care sa joace Bomberman, acesta trebuie sa se conecteze printr-o conexiune WebSocket la environmentul nostru.
-Prin aceasta conexiune se trimit/primesc date real-time. Datele trimise de environment descriu starea jocului si evenimentele care s-au intamplat
-la ultimul frame. Datele trimise de AI descriu deciziile pe care doreste AI-ul sa le ia in joc.
+ The Bomberman that is now ready for an AI vs AI showdown it’s really just a simplistic version of the classic game. The gameplay consists of a grid with a predetermined width and height on which any AI can move freely and can plant and/or move bombs. When a bomb explodes and an AI is near it that AI will die. There are also immobile blocks that will serve as obstacles for the AI.
 
-### Bomberman
-Jocul Bomberman pregatit pentru AI vs AI este o versiune simplista a jocului clasic. Acesta presupunand un grid cu dimensiune prestabilita pe care
-fiecare AI se poate misca si poate planta/misca bombe. In momentul in care o bomba explodeaza, iar un AI se afla in preajma acesteia, va muri.
-Pe langa exista blocuri care blocheaza trecerea AI-urilor.
+Room
 
-### Room
-Pentru a te conecta la environment, trebuie folosit urmatorul link:
-```
+To connect to our environment, you must use the following link:
+a
+Steps
+
 ws://sybilai.com:8124
-```
+Steps
 
-### Steps
-1. Connect to environment
-2. Send event 'login'
-3. Getting the state and rules of the game
-4. Get every frame
-5. Send at every frame decissions
+Connect to environment
+Send event 'login'
+Getting the state and rules of the game
+Get every frame
+Send at every frame decisions
+AI's events
 
-### AI's events
 This are the messages you can send to the environment.
 
-#### Event: login
-Acesta poate fi trimis doar la inceputul jocului.
-```
+Event: login
+
+This can be sent only at the beginning of the game
+
 {"event": "login",
  "name": "<<your ai's name>>"
  }
-```
 
-#### Event: bomb
-Acesta poate fi trimis la fiecare frame. Acesta va pune in frameul in care a fost trimis o bomba pe pozitia AI-ului.
-```
+Event: Bomb
+
+This can be sent at any frame. This will send the position of the AI’s bomb at the current frame.
 {
  "event": "bomb"
 }
-```
 
+Event: move
 
-#### Event: move
-Acesta poate fi trimis la fiecare frame. Acesta contine un array care contine directiile in care ar trebui sa se miste AI-ul.
-In cazul in care AI-ul nu poate indeplini una din miscari, restul miscarilor din aceeasi comanda vor fi anulate.
-```
+This can be sent at any frame. It contains an array which has the directions in which the AI can move. If the AI can’t comply to one of the movement the other ones will be cancelled.
+
 {"event":"move", 
  "direction": [
   "up", "left", "right", "down" // you decide
   ]
 }
-```
 
-De exemplu pentru a se misca in sus:
-```
+
+For example, going up:
+
+
 {"event":"move", 
  "direction": ["up"]
 }
-```
 
-Pentru a se misca la dreapta:
-```
+
+
+Going right:
+
 {"event":"move",
  "direction": ["right"]
 }
-```
 
-Pentru a se misca in sus, apoi la dreapta, apoi in jos:
-```
+
+Going up, right and then heading down:
+
+
 {"event":"move",
  "direction": ["up", "right", "down"]
 }
-```
-
-### Environment's events
-Fiecare event care vine de la Environment are in interior un timestamp care reprezinta frame-ul la care a fost trimis mesajul.
 
 
-#### Event login
-Acesta e primul mesaj pe care-l veti primi care va reprezenta id-ul dumneavoastra in joc.
-```
+
+Environment’s events
+
+Every event that comes out from the environment has inside of it a timestamp that represents the frame in which it was send.
+
+
+Event Login
+
+
+This is the first message you’ll receive when you’ll receive and it will contain your ID inside the game.
+
 {"event": "login", 
  "your_id": 2
 }
-```
 
-#### Event game_rules
-Acesta este un event care descrie regulile jocului care nu se schimba pe parcursul acestuia. Dimensiunea gridului, viata/viteza/rangeul bombelor/flacarilor/playerilor.
 
-```
+Event game_rules
+
+This is an event that describes the rules of the game that do not change throughout it. The grid’s dimensions, health, speed, bomb’s and flame’s range and the players.
+
 {"event":"game_rules",
  "data":{
   "sizeN":20,
@@ -112,59 +114,55 @@ Acesta este un event care descrie regulile jocului care nu se schimba pe parcurs
  },
  "timestamp":1015
 }
-```
 
-#### Event game_state
 
-```
+
+Event game_state
+
+
 {"event":"game_state",
  "matrices":[ [block, block .. block] .. [block, block .. block] ]
 }
-```
 
-#### Event frame
-Environmentul va raspunde cu acest event de fiecare data cand se schimba ceva in joc. Acest event contine un array cu 3 tipuri de evenimente: `new_entity`, `move_entity`, `destroy_entity`.
+Event frame
 
-```
+The environment will respond with this event every time there’s a change throughout the game. This event will also contain an array with 3 other types of events such as new_entity, move_entity, destroy_entity.
+
+
 {"event":"frame",
  "frame": [event, event, event]
 }
-```
 
-#### Event new_entity
-Eventul acesta este trimis in momentul in care a aparut o noua entitate.
-```
-{"event":"new_entity",
- "data": entity
-}
-```
+Event new_entity
 
-#### Event move_entity
-Eventul acesta este trimis in momentul in care a aparut o noua entitate.
-```
+This event is sent when another entity appears.
+
+
 {"event":"move_entity",
  "object_id": <<id>>,
  "pos":{"x": 1, "y": 0}
 }
-```
 
-#### Event destroy_entity
-Eventul acesta este trimis in momentul in care a aparut o noua entitate.
-```
+
+Event destroy_entity
+
+This event is sent when an entity disappears. 
+
 {"event":"destroy_entity",
  "object_id": <<id>>
 }
-```
 
-### Objects
 
-#### Block
-```
+Objects
+
+ Block
+
 {"content": [entity, entity, entity]}
-```
 
-#### Entity
-```
+
+
+Entity 
+
 {"isBlocking":false,
  "mortal":true,
  "type":"player/bomb/flame/fixblock",
@@ -174,5 +172,4 @@ Eventul acesta este trimis in momentul in care a aparut o noua entitate.
  "direction":"none",
  "object_id":112,
  "id":10
-}
-```
+
