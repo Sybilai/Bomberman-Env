@@ -1,4 +1,7 @@
 ###The concept
+We have the **environment**, the **visualizer**, and your program (lets call it **AI**).
+The **environment** is the "referee".
+The **visualizer** is the visual representation of the game. [Check it out](http://sybilai.com/vis/bomberman/) to see how it looks like.
 
 To create an AI capable of playing Bomberman it must be able to connect through a WebSocket to reach our environment. Through this connection there’s data being sent and received in real-time. The data that the environment provides describes the game state and the events that took place in the last frame. The data sent out by the AI describes his course of action throughout the game.
 
@@ -9,7 +12,9 @@ The Bomberman that is now ready for an AI vs AI showdown it’s really just a si
 ###Room
 
 To connect to our environment, you must use the following link:
+```
 ws://sybilai.com:8124
+```
 
 ###Steps
 
@@ -121,7 +126,7 @@ This is an event that describes the rules of the game that do not change through
 ```
 
 ####Event frame
-The environment will respond with this event every time there’s a change throughout the game. This event will also contain an array with 3 other types of events such as new_entity, move_entity, destroy_entity.
+The environment will respond with this event every time there’s a change throughout the game. This event will also contain an array with 3 other types of events such as `new_entity`, `move_entity`, `destroy_entity`.
 
 ```
 {"event":"frame",
