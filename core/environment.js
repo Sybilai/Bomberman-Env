@@ -12,6 +12,7 @@ var Environment = {
   validating: function(obj) { // JSON object
     // validating the json
     // if is ok, we will process it
+    console.log(obj);
     Environment.process(obj);
   },
 

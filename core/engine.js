@@ -152,7 +152,7 @@ var Engine = {
 
   createBomb: function(player_id) {
     var player = searchById("players", player_id);
-    player.bomb();
+    if (player) player.bomb();
   },
 
 

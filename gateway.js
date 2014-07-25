@@ -70,5 +70,5 @@ sendMessage = function (obj) {
   console.log( obj );
 try {
   process.send(obj);
-} catch(e) {}
+} catch(e) { console.log(e);}
 }

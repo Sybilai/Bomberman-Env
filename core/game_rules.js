@@ -14,7 +14,7 @@ var GameRules = {
   },
 
   players: {
-    speed: 4  //frames/block
+    speed: 1  //frames/block
   },
 
   currentFrame: 0,
